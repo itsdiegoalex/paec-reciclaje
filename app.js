@@ -15,10 +15,10 @@ mongoose.connect(uri)
   .catch(err => console.error('❌ Error al conectar con MongoDB:', err));
 
 // Modelos
-const Material = require('./models/material');
-const Participant = require('./models/participant');
-const Contribution = require('./models/contribution');
-const RouteModel = require('./models/route');
+const Material = require('./models/Material');
+const Participant = require('./models/Participant');
+const Contribution = require('./models/Contribution');
+const RouteModel = require('./models/Route');
 
 // Rutas
 app.get('/', (req, res) => {
@@ -26,38 +26,38 @@ app.get('/', (req, res) => {
 });
 
 app.get('/materials', async (req, res) => {
-  const materials = await material.find();
+  const materials = await Material.find();
   res.render('materials', { materials });
 });
 app.post('/materials', async (req, res) => {
-  await material.create(req.body);
+  await Material.create(req.body);
   res.redirect('/materials');
 });
 
 app.get('/participants', async (req, res) => {
-  const participants = await participant.find();
+  const participants = await Participant.find();
   res.render('participants', { participants });
 });
 app.post('/participants', async (req, res) => {
-  await participant.create(req.body);
+  await Participant.create(req.body);
   res.redirect('/participants');
 });
 
 app.get('/contributions', async (req, res) => {
-  const contributions = await contribution.find();
+  const contributions = await Contribution.find();
   res.render('contributions', { contributions });
 });
 app.post('/contributions', async (req, res) => {
-  await contribution.create(req.body);
+  await Contribution.create(req.body);
   res.redirect('/contributions');
 });
 
 app.get('/routes', async (req, res) => {
-  const routes = await routeModel.find();
+  const routes = await RouteModel.find();
   res.render('routes', { routes });
 });
 app.post('/routes', async (req, res) => {
-  await routeModel.create(req.body);
+  await RouteModel.create(req.body);
   res.redirect('/routes');
 });
 
