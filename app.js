@@ -1,3 +1,5 @@
+require('dotenv').config(); // carga variables de entorno
+
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -5,13 +7,15 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
-mongoose.connect('mongodb+srv://diego:Diegoo2008@cluster0.ggunn6e.mongodb.net/reciclaje?retryWrites=true&w=majority', {
+const uri = process.env.MONGODB_URI;
+const PORT = process.env.PORT || 3000;
+
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log('✅ Conectado a MongoDB Atlas'))
 .catch(err => console.error('❌ Error al conectar con MongoDB:', err));
-
 
 // Modelos
 const Material = require('./models/Material');
@@ -60,6 +64,6 @@ app.post('/Routes', async (req, res) => {
   res.redirect('/Routes');
 });
 
-app.listen(3000, () => {
-  console.log('Servidor corriendo en http://localhost:3000');
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
