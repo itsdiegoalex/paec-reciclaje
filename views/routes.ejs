@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Rutas de Recolección</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 25px;
+    }
+
+    form {
+      background-color: #ffffff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    form input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 12px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #ca6f1e;
+    }
+
+    .filter-container {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    .filter-container input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    li {
+      background-color: #ffffff;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      font-size: 16px;
+      color: #34495e;
+    }
+
+    li span {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registro de Rutas de Recolección</h1>
+
+  <form action="/Routes" method="POST">
+    <input name="nombre_ruta" placeholder="Nombre de la ruta" required>
+    <input name="puntos" placeholder="Puntos de recolección (separados por comas)" required>
+    <input name="dias" placeholder="Días de recolección" required>
+    <input name="hora" type="time" required>
+    <button>Registrar ruta</button>
+  </form>
+
+  <div class="filter-container">
+    <input type="text" id="filtroRutas" placeholder="Filtrar rutas por nombre, puntos, días u hora...">
+  </div>
+
+  <ul id="lista-rutas">
+    <% routes.forEach(r => { %>
+      <li>
+        <span><%= r.nombre_ruta %></span> – 
+        <%= r.puntos %> – 
+        <%= r.dias %> – 
+        <%= r.hora %>
+      </li>
+    <% }) %>
+  </ul>
+
+  <script>
+    const filtro = document.getElementById('filtroRutas');
+    const lista = document.getElementById('lista-rutas');
+    const items = lista.getElementsByTagName('li');
+
+    filtro.addEventListener('input', () => {
+      const texto = filtro.value.toLowerCase();
+      Array.from(items).forEach(item => {
+        const contenido = item.textContent.toLowerCase();
+        item.style.display = contenido.includes(texto) ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

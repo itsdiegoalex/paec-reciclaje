@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Materiales Reciclables</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f9;
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 25px;
+    }
+
+    form {
+      background-color: #ffffff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    form input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 12px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #1e8449;
+    }
+
+    .filter-container {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    .filter-container input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    li {
+      background-color: #ffffff;
+      padding: 15px 20px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      font-size: 16px;
+      color: #34495e;
+    }
+
+    li span {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registro de Materiales Reciclables</h1>
+
+  <form action="/Materials" method="POST">
+    <input name="tipo" placeholder="Tipo (Plástico, Papel...)" required>
+    <input name="descripcion" placeholder="Descripción" required>
+    <input name="fecha_registro" type="date" required>
+    <button>Registrar material</button>
+  </form>
+
+  <div class="filter-container">
+    <input type="text" id="filtroMateriales" placeholder="Filtrar por tipo, descripción o fecha...">
+  </div>
+
+  <ul id="lista-materiales">
+    <% materials.forEach(m => { %>
+      <li>
+        <span><%= m.tipo %></span> - 
+        <%= m.descripcion %> - 
+        <%= m.fecha_registro %>
+      </li>
+    <% }) %>
+  </ul>
+
+  <script>
+    const filtro = document.getElementById('filtroMateriales');
+    const lista = document.getElementById('lista-materiales');
+    const items = lista.getElementsByTagName('li');
+
+    filtro.addEventListener('input', () => {
+      const texto = filtro.value.toLowerCase();
+      Array.from(items).forEach(item => {
+        const contenido = item.textContent.toLowerCase();
+        item.style.display = contenido.includes(texto) ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
+

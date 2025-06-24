@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Aportes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background-color: #ffffff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    form input {
+      width: 100%;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .filter-container {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    .filter-container input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    li {
+      background-color: #ffffff;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      font-size: 15px;
+    }
+
+    li span {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registro de Aportes</h1>
+
+  <form action="/Contributions" method="POST">
+    <input name="nombre_participante" placeholder="Nombre del participante" required>
+    <input name="material" placeholder="Material reciclado" required>
+    <input name="kilos" type="number" step="0.1" placeholder="Kilos (kg)" required>
+    <input name="punto_recoleccion" placeholder="Punto de recolección" required>
+    <input name="fecha_entrega" type="date" required>
+    <input name="hora" type="time" required>
+    <button>Registrar Aporte</button>
+  </form>
+
+  <div class="filter-container">
+    <input type="text" id="filtro" placeholder="Filtrar por participante, material o punto...">
+  </div>
+
+  <ul id="lista-aportes">
+    <% contributions.forEach(c => { %>
+      <li>
+        <span><%= c.nombre_participante %></span> - 
+        <%= c.material %> - 
+        <%= c.kilos %> kg - 
+        <%= c.punto_recoleccion %> - 
+        <%= c.fecha_entrega %> <%= c.hora %>
+      </li>
+    <% }) %>
+  </ul>
+
+  <script>
+    const filtro = document.getElementById('filtro');
+    const lista = document.getElementById('lista-aportes');
+    const items = lista.getElementsByTagName('li');
+
+    filtro.addEventListener('input', () => {
+      const texto = filtro.value.toLowerCase();
+      Array.from(items).forEach(item => {
+        const contenido = item.textContent.toLowerCase();
+        item.style.display = contenido.includes(texto) ? 'flex' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

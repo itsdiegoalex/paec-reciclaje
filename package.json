@@ -1,0 +1,20 @@
+{
+  "name": "proyecto_paec",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.0",
+    "qrcode": "^1.5.4"
+  },
+  "description": ""
+}
+
