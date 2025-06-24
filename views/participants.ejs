@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Participantes</title>
   <style>
+    /* Aquí va tu CSS que ya tienes */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f6f8;
@@ -13,12 +14,10 @@
       flex-direction: column;
       align-items: center;
     }
-
     h1 {
       color: #2c3e50;
       margin-bottom: 25px;
     }
-
     form {
       background-color: #ffffff;
       padding: 25px 30px;
@@ -28,7 +27,6 @@
       max-width: 500px;
       margin-bottom: 30px;
     }
-
     form input {
       width: 100%;
       padding: 12px 15px;
@@ -37,7 +35,6 @@
       border-radius: 8px;
       font-size: 15px;
     }
-
     form button {
       width: 100%;
       padding: 12px;
@@ -50,17 +47,14 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-
     form button:hover {
       background-color: #732d91;
     }
-
     .filter-container {
       width: 100%;
       max-width: 600px;
       margin-bottom: 20px;
     }
-
     .filter-container input {
       width: 100%;
       padding: 10px;
@@ -68,14 +62,12 @@
       border: 1px solid #ccc;
       font-size: 15px;
     }
-
     ul {
       list-style: none;
       padding: 0;
       width: 100%;
       max-width: 600px;
     }
-
     li {
       background-color: #ffffff;
       padding: 15px 20px;
@@ -85,7 +77,6 @@
       font-size: 16px;
       color: #34495e;
     }
-
     li span {
       font-weight: bold;
       color: #2c3e50;
@@ -95,40 +86,41 @@
 <body>
   <h1>Registro de Participantes</h1>
 
-  <form action="/Participants" method="POST">
-    <input name="nombre" placeholder="Nombre completo" required>
-    <input name="rol" placeholder="Rol (Estudiante, Docente...)" required>
-    <input name="grupo" placeholder="Grupo (opcional)" required>
-    <input name="fecha_registro" type="date" required>
+  <form action="/participants" method="POST">
+    <input name="nombre" placeholder="Nombre completo" required />
+    <input name="rol" placeholder="Rol (Estudiante, Docente...)" required />
+    <input name="grupo" placeholder="Grupo (opcional)" required />
+    <input name="fecha_registro" type="date" required />
     <button>Registrar participante</button>
   </form>
 
   <div class="filter-container">
-    <input type="text" id="filtroParticipantes" placeholder="Filtrar por nombre, rol, grupo o fecha...">
+    <input type="text" id="filtroParticipantes" placeholder="Filtrar por nombre, rol, grupo o fecha..." />
   </div>
 
-  <ul id="lista-participantes">
+  <ul id="listaParticipantes">
     <% participants.forEach(p => { %>
       <li>
         <span><%= p.nombre %></span> – 
         <%= p.rol %> – 
         <%= p.grupo %> – 
-        <%= p.fecha_registro %>
+        <%= p.fecha_registro.toISOString().split('T')[0] %>
       </li>
     <% }) %>
   </ul>
 
   <script>
-    const filtro = document.getElementById('filtroParticipantes');
-    const lista = document.getElementById('lista-participantes');
-    const items = lista.getElementsByTagName('li');
+    const filtroInput = document.getElementById('filtroParticipantes');
+    const lista = document.getElementById('listaParticipantes');
 
-    filtro.addEventListener('input', () => {
-      const texto = filtro.value.toLowerCase();
-      Array.from(items).forEach(item => {
-        const contenido = item.textContent.toLowerCase();
-        item.style.display = contenido.includes(texto) ? 'block' : 'none';
-      });
+    filtroInput.addEventListener('input', () => {
+      const filtro = filtroInput.value.toLowerCase();
+      const items = lista.getElementsByTagName('li');
+
+      for (let item of items) {
+        const texto = item.textContent.toLowerCase();
+        item.style.display = texto.includes(filtro) ? '' : 'none';
+      }
     });
   </script>
 </body>

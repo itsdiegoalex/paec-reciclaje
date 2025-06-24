@@ -83,22 +83,21 @@
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       font-size: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
     }
 
     li span {
       font-weight: bold;
       color: #2c3e50;
     }
-
-    .hidden {
-      display: none;
-    }
   </style>
 </head>
 <body>
   <h1>Registro de Aportes</h1>
 
-  <form action="/Contributions" method="POST">
+  <form action="/contributions" method="POST">
     <input name="nombre_participante" placeholder="Nombre del participante" required>
     <input name="material" placeholder="Material reciclado" required>
     <input name="kilos" type="number" step="0.1" placeholder="Kilos (kg)" required>
